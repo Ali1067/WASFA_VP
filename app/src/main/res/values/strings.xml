@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name" translatable="false">Wasfa</string>
+
+    <string name="silver_title">Silver Membership Package</string>
+    <string name="golden_title">Golden Membership Package</string>
+    <string name="diamond_title">Diamond Membership Package</string>
+    <string name="bronze_title">Bronze Membership Package</string>
+
+
+    <string name="silver_text">Text From API</string>
+    <string name="golden_text">Text From API</string>
+    <string name="diamond_text">Text From API</string>
+    <string name="bronze_text">Text From API</string>
+    <string name="day_of_quitting">Day of Quitting</string>
+    <string name="start_quitting_smoking">Start Quitting Smoking</string>
+    <string name="save">SAVE</string>
+    <string name="packs_per_day">Packs Per Day</string>
+    <string name="hour_of_quitting">Hour of Quitting</string>
+
+
+</resources>

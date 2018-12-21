@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wasfa</string>
+    <string name="silver_title">حزمة العضوية الفضية</string>
+    <string name="golden_title">حزمة العضوية الذهبية</string>
+    <string name="diamond_title">حزمة عضوية الماس</string>
+    <string name="bronze_title">حزمة عضوية البرونزية</string>
+    <string name="save">حفظ</string>
+    <string name="hour_of_quitting">ساعة من الإقلاع</string>
+    <string name="start_quitting_smoking">بدء الإقلاع عن التدخين</string>
+    <string name="day_of_quitting">يوم الإقلاع</string>
+    <string name="packs_per_day">حزم يوميا</string>
+</resources>
