@@ -61,96 +61,96 @@ public class Quitting_vices extends YouTubeBaseActivity {
                 setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_quitting_vices);
+//        iof=this;
 //        getSupportActionBar().hide();
 
 //        actionbar();
         initialize();
         view_cliks();
 
-        Log.i("before- V: " + part1 , " after V= " + part2);
+        youTubePlayerView.setVisibility(View.GONE);
+        videoThumbnailImageView.setVisibility(View.VISIBLE);
+
+        YoutbuePlayer();
+        YoutubeThumbnail();
+
+
+ }
 
 
 
+ public void YoutubeThumbnail()
+ {
+
+     videoThumbnailImageView.initialize(developer_key, new YouTubeThumbnailView.OnInitializedListener() {
+         @Override
+         public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+             //when initialization is sucess, set the video id to thumbnail to load
+             youTubeThumbnailLoader.setVideo("5xVh-7ywKpE");
+
+             youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                 @Override
+                 public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                     //when thumbnail loaded successfully release the thumbnail loader as we are showing thumbnail in adapter
+                     youTubeThumbnailLoader.release();
+                 }
+
+                 @Override
+                 public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                     //print or show error when thumbnail load failed
+                     Log.e(TAG, "Youtube Thumbnail Error");
+                 }
+             });
+         }
+
+         @Override
+         public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+             //print or show error when initialization failed
+             Log.e(TAG, "Youtube Initialization Failure");
+
+         }
+     });
+
+
+     videoThumbnailImageView.setOnClickListener(new View.OnClickListener() {
+
+         @Override
+         public void onClick(View arg0) {
+             videoThumbnailImageView.setVisibility(View.GONE);
+             youTubePlayerView.setVisibility(View.VISIBLE);
+
+
+         }
+     });
 
 
 
-        videoThumbnailImageView = findViewById(R.id.video_thumbnail_image_view);
-        videoThumbnailImageView.initialize(developer_key, new YouTubeThumbnailView.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                //when initialization is sucess, set the video id to thumbnail to load
-                youTubeThumbnailLoader.setVideo("5xVh-7ywKpE");
+ }
 
-                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
-                    @Override
-                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-                        //when thumbnail loaded successfully release the thumbnail loader as we are showing thumbnail in adapter
-                        youTubeThumbnailLoader.release();
-                    }
+    YouTubePlayer youTubePlayer;
 
-                    @Override
-                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
-                        //print or show error when thumbnail load failed
-                        Log.e(TAG, "Youtube Thumbnail Error");
-                    }
-                });
-            }
+ public void YoutbuePlayer()
+ {
 
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                //print or show error when initialization failed
-                Log.e(TAG, "Youtube Initialization Failure");
-
-            }
-        });
+     youTubePlayerView.initialize(developer_key,
+             new YouTubePlayer.OnInitializedListener() {
+                 @Override
+                 public void onInitializationSuccess(YouTubePlayer.Provider provider,
+                     YouTubePlayer youTubePlayer, boolean b) {
 
 
-
-
-
-
-
-//        youTubePlayerView.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-        youTubePlayerView.initialize(developer_key,
-                new YouTubePlayer.OnInitializedListener() {
-                    @Override
-                    public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                        YouTubePlayer youTubePlayer, boolean b) {
-
-
-                        youTubePlayer.loadVideo("5xVh-7ywKpE");
-                        youTubePlayer.play();
+                     youTubePlayer.loadVideo("5xVh-7ywKpE");
+                     youTubePlayer.play();
 //                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
 
-                    }
-                    @Override
-                    public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                        YouTubeInitializationResult youTubeInitializationResult) {
+                 }
+                 @Override
+                 public void onInitializationFailure(YouTubePlayer.Provider provider,
+                                                     YouTubeInitializationResult youTubeInitializationResult) {
 
-                    }
-                });
-
-
-        videoThumbnailImageView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                videoThumbnailImageView.setVisibility(View.GONE);
-                youTubePlayerView.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-    }
+                 }
+             });
+ }
 
     public void initialize()
     {
@@ -158,6 +158,7 @@ public class Quitting_vices extends YouTubeBaseActivity {
         videoView = findViewById(R.id.vv_videoview);
         tv_start = findViewById(R.id.tv_start);
         youTubePlayerView = findViewById(R.id.player);
+        videoThumbnailImageView = findViewById(R.id.video_thumbnail_image_view);
 
 //        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(video_url,
 //                MediaStore.Images.Thumbnails.MINI_KIND);

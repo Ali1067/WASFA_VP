@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Quitting_vices" />
-        <activity android:name=".QuitSmokingActivity"></activity>
+        <activity android:name=".QuitSmokingActivity" />
+        <activity android:name=".YoutubeVideo"></activity>
     </application>
 
 </manifest>

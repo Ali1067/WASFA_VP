@@ -16,21 +16,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/player"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"  />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:orientation="vertical">
 
-            <com.google.android.youtube.player.YouTubePlayerView
-                android:id="@+id/player"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"  />
-
-            <com.google.android.youtube.player.YouTubeThumbnailView
+         <com.google.android.youtube.player.YouTubeThumbnailView
                 android:id="@+id/video_thumbnail_image_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:visibility="gone"
                 android:background="@android:color/darker_gray"
                 android:contentDescription="Description"
                 android:scaleType="centerCrop" />
@@ -47,6 +50,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         >
 
