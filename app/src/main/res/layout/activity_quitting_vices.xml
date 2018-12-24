@@ -17,11 +17,11 @@
         android:layout_height="wrap_content">
 
 
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/player"
-            android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"  />
+        <!--<com.google.android.youtube.player.YouTubePlayerView-->
+            <!--android:id="@+id/player"-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="180dp"  />-->
 
 
         <LinearLayout
@@ -33,7 +33,6 @@
                 android:id="@+id/video_thumbnail_image_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:visibility="gone"
                 android:background="@android:color/darker_gray"
                 android:contentDescription="Description"
                 android:scaleType="centerCrop" />
