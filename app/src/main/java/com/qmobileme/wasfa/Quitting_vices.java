@@ -89,7 +89,7 @@ public class Quitting_vices extends AppCompatActivity {
          @Override
          public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
              //when initialization is sucess, set the video id to thumbnail to load
-             youTubeThumbnailLoader.setVideo("hip-_JbR888");
+             youTubeThumbnailLoader.setVideo("7UUPiCVbZhE");
 
              youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
                  @Override
@@ -138,28 +138,6 @@ public class Quitting_vices extends AppCompatActivity {
 
 
 
- public void YoutbuePlayer()
- {
-
-     youTubePlayerView.initialize(developer_key,
-             new YouTubePlayer.OnInitializedListener() {
-                 @Override
-                 public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                     YouTubePlayer youTubePlayer, boolean b) {
-
-
-                     youTubePlayer.loadVideo("5xVh-7ywKpE");
-                     youTubePlayer.play();
-//                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
-
-                 }
-                 @Override
-                 public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                     YouTubeInitializationResult youTubeInitializationResult) {
-
-                 }
-             });
- }
 
     public void initialize()
     {

@@ -33,7 +33,7 @@ public class YoutubeVideo extends YouTubeBaseActivity {
                                                         YouTubePlayer youTubePlayer, boolean b) {
 
 
-                        youTubePlayer.loadVideo("hip-_JbR888");
+                        youTubePlayer.loadVideo("7UUPiCVbZhE");
                         youTubePlayer.play();
                         youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
 
