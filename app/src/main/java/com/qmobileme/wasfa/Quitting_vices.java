@@ -32,7 +32,7 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import static android.support.constraint.Constraints.TAG;
 
 
-public class Quitting_vices extends YouTubeBaseActivity {
+public class Quitting_vices extends AppCompatActivity {
 
     LinearLayout ll_back;
     VideoView videoView;
@@ -89,7 +89,7 @@ public class Quitting_vices extends YouTubeBaseActivity {
          @Override
          public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
              //when initialization is sucess, set the video id to thumbnail to load
-             youTubeThumbnailLoader.setVideo("5xVh-7ywKpE");
+             youTubeThumbnailLoader.setVideo("hip-_JbR888");
 
              youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
                  @Override
@@ -126,7 +126,7 @@ public class Quitting_vices extends YouTubeBaseActivity {
 
              Intent intent = new Intent(getApplicationContext(), YoutubeVideo.class);
              startActivity(intent);
-             finish();
+
 
 
          }

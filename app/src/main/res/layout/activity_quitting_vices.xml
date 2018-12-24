@@ -24,10 +24,14 @@
             <!--android:layout_height="180dp"  />-->
 
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:orientation="vertical">
+
+
+
+
 
          <com.google.android.youtube.player.YouTubeThumbnailView
                 android:id="@+id/video_thumbnail_image_view"
@@ -37,6 +41,13 @@
                 android:contentDescription="Description"
                 android:scaleType="centerCrop" />
 
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+
+                android:src="@drawable/play"/>
+
     <VideoView
         android:visibility="gone"
         android:id="@+id/vv_videoview"
@@ -44,7 +55,7 @@
         android:layout_height="fill_parent" />
 
 
-        </LinearLayout>
+        </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
