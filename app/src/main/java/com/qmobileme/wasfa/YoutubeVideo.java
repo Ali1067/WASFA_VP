@@ -1,5 +1,6 @@
 package com.qmobileme.wasfa;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -43,5 +44,14 @@ public class YoutubeVideo extends YouTubeBaseActivity {
 
                     }
                 });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), Quitting_vices.class);
+        startActivity(intent);
+
     }
 }
