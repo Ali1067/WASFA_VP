@@ -14,13 +14,19 @@
         <activity android:name=".Quitting_vices">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".QuitSmokingActivity" />
-        <activity android:name=".YoutubeVideo"></activity>
+        <activity android:name=".YoutubeVideo" />
+        <activity android:name=".Alarm"></activity>
+
+        <receiver android:name=".Alarm_Broadcast" android:process=":remote">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+            <!--</intent-filter>-->
+        </receiver>
     </application>
 
 </manifest>

@@ -36,9 +36,9 @@ public class Quitting_vices extends AppCompatActivity {
 
     LinearLayout ll_back;
     VideoView videoView;
-    TextView tv_start;
+    TextView tv_start, tv_quit_smoking;
     ProgressDialog progressDialog;
-//    String video_url = "https://r2---sn-h5moxug0-3a4l.googlevideo.com/videoplayback?ms=au%2Crdu&id=o-AIuCpOoaw-n8TLmbEHFH8ulc0uFOr801QPMEgQqir_pF&ei=6IUbXPWzJNSGyQWOyICoCQ&mv=m&mt=1545307525&dur=88.212&pl=21&source=youtube&ip=5.23.103.98&key=yt6&mn=sn-h5moxug0-3a4l%2Csn-n8v7znlr&mm=31%2C29&initcwndbps=706250&fvip=7&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cnh%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&nh=%2CIgpwcjAyLnN2bzA2KgkxMjcuMC4wLjE&expire=1545329224&lmt=1332979788044894&requiressl=yes&clen=3744769&mime=video%2Fmp4&gir=yes&ipbits=0&ratebypass=yes&c=WEB&itag=18&signature=D451941C8B6D0330177B8872904B79699A9E2A27.B9A58FFBA04A132054E243D82F64E1BA5626A004&video_id=0gGMqjeeiJY&title=Posermocap+Sci+Fi+Moves+Volume+2.mp4";
+
     String video_url = "https://www.youtube.com/watch?v=5aVU_0a8-A4";
     final String developer_key = "AIzaSyBj_L_YFAcothZ2LLH2EdEzoDr2ZqWJ9ok";
     String video_id;
@@ -62,6 +62,8 @@ public class Quitting_vices extends AppCompatActivity {
         this.getWindow().
                 setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_quitting_vices);
         progressDialog = new ProgressDialog(Quitting_vices.this);
         progressDialog.setTitle("Please Wait");
@@ -146,22 +148,16 @@ public class Quitting_vices extends AppCompatActivity {
         tv_start = findViewById(R.id.tv_start);
         youTubePlayerView = findViewById(R.id.player);
         videoThumbnailImageView = findViewById(R.id.video_thumbnail_image_view);
-
-//        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(video_url,
-//                MediaStore.Images.Thumbnails.MINI_KIND);
-//
-//        BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
-
+        tv_quit_smoking = findViewById(R.id.tv_quit);
 
 
         mediaControler = new MediaController(this);
-//        createThumbnailAtTime(video_url, 2);
         mediaControler.setAnchorView(videoView);
         videoView.setMediaController(mediaControler);
         videoView.requestFocus();
         videoView.seekTo( 2000 );
 
-//        https://stackoverflow.com/questions/13814055/how-to-play-youtube-videos-in-android-video-view
+
 
         videoView.getDuration();
         videoView.setVideoPath("http://www.youtube.com/embed/" + part2 + "?autoplay=1&vq=small");
@@ -189,6 +185,15 @@ public class Quitting_vices extends AppCompatActivity {
                 Intent intent = new Intent(Quitting_vices.this, QuitSmokingActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+
+        tv_quit_smoking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Alarm.class);
+                startActivity(intent);
             }
         });
 

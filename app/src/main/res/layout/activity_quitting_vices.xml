@@ -8,7 +8,7 @@
     tools:context=".Quitting_vices"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-   >
+    >
 
 
 
@@ -18,10 +18,10 @@
 
 
         <!--<com.google.android.youtube.player.YouTubePlayerView-->
-            <!--android:id="@+id/player"-->
-            <!--android:visibility="visible"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="180dp"  />-->
+        <!--android:id="@+id/player"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="180dp"  />-->
 
 
         <FrameLayout
@@ -33,7 +33,7 @@
 
 
 
-         <com.google.android.youtube.player.YouTubeThumbnailView
+            <com.google.android.youtube.player.YouTubeThumbnailView
                 android:id="@+id/video_thumbnail_image_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -48,60 +48,61 @@
 
                 android:src="@drawable/play"/>
 
-    <VideoView
-        android:visibility="gone"
-        android:id="@+id/vv_videoview"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+            <VideoView
+                android:visibility="gone"
+                android:id="@+id/vv_videoview"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" />
 
 
         </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        >
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="left"
-            android:gravity="left">
+            android:layout_height="40dp"
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quit Smokking"
-                android:gravity="center|left"
-                android:paddingLeft="15dp"
-                android:textSize="15dp"
-                android:layout_gravity="center|left"
-                android:textColor="@color/white"/>
-
+            android:layout_marginTop="10dp"
+            >
 
             <LinearLayout
-                android:id="@+id/ll_back"
-                android:layout_width="55dp"
-                android:layout_height="45dp"
-                android:layout_gravity="top"
-                android:paddingLeft="10dp">
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:src="@drawable/back"
-                    android:layout_gravity="top"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left"
+                android:gravity="left">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quit Smokking"
+                    android:gravity="center|left"
+                    android:paddingLeft="15dp"
+                    android:textSize="15dp"
+                    android:layout_gravity="center|left"
+                    android:textColor="@color/white"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_back"
+                    android:layout_width="55dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="top"
+                    android:paddingLeft="10dp">
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/back"
+                        android:layout_gravity="top"/>
+                </LinearLayout>
+
+
             </LinearLayout>
 
-
-        </LinearLayout>
-
-    </FrameLayout>
+        </FrameLayout>
     </FrameLayout>
 
 
@@ -129,56 +130,57 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-
-
-
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:id="@+id/tv_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Start"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:paddingRight="30dp"
-                    android:textColor="@color/white"
-                    android:paddingLeft="30dp"
-                    android:background="@drawable/green_button"
-                    android:gravity="center|left"
-                    android:layout_gravity="left"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Quit Smoking"
-                    android:textStyle="bold"
-                    android:layout_gravity="right"
-                    android:gravity="left|center"
-                    android:layout_weight="0.4"/>
+
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:id="@+id/tv_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Start"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:paddingRight="30dp"
+
+                        android:paddingLeft="30dp"
+                        android:background="@drawable/green_button"
+                        android:gravity="center|left"
+                        android:layout_gravity="left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Quit Smoking"
+                        android:textStyle="bold"
+                        android:layout_gravity="right"
+                        android:gravity="left|center"
+                        android:layout_weight="0.4"/>
+                </LinearLayout>
+
+
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ABCDEF\n\n\n\n"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="2dp"
-            android:padding="8dp"/>
+            <TextView
+                android:id="@+id/tv_quit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ABCDEF\n\n\n\n"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="2dp"
+                android:padding="8dp"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -191,18 +193,5 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>

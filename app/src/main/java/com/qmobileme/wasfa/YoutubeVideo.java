@@ -35,7 +35,7 @@ public class YoutubeVideo extends YouTubeBaseActivity {
 
                         youTubePlayer.loadVideo("7UUPiCVbZhE");
                         youTubePlayer.play();
-                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
+                        youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
 
                     }
                     @Override
