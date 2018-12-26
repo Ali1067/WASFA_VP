@@ -1,11 +1,13 @@
 package com.qmobileme.wasfa;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.os.Build;
@@ -13,11 +15,20 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,6 +40,7 @@ public class Alarm extends AppCompatActivity {
 
     String to_date , from_date, to_time, from_time;
     int hour_from, mint_from, hour_to, mint_to;
+    int from_day, from_month, from_year, to_day, to_month, to_year;
      int to_hour_picker_calendar, to_mint_picker_calendar;
      int fromt_hour_picker_calendar, fromt_mint_picker_calendar;
      Timer from_timer, to_timer;
@@ -36,8 +48,14 @@ public class Alarm extends AppCompatActivity {
      AlarmManager alarmManager;
      Calendar temp_from_time, temp_to_time;
      LinearLayout ll_save_reminder;
-
-    TextView tv_date_from, tv_date_to, tv_time_from, tv_time_to;
+     LinearLayout ll_mon, ll_tue, ll_wed, ll_thurs, ll_fri, ll_sat, ll_sun;
+     CheckBox cb_mon, cb_tue, cb_wed, cb_thurs, cb_fri, cb_sat, cb_sun;
+     TextView tv_date_from, tv_date_to, tv_time_from, tv_time_to, tv_text_repeat;
+     LinearLayout tv_repeat;
+     CheckBox cb_all_day;
+     boolean b_mon, b_tue, b_wed, b_thur, b_fri, b_sat, b_sun;
+     SharedPreferences sharedPreferences;
+     SharedPreferences.Editor write;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +70,9 @@ public class Alarm extends AppCompatActivity {
         alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         temp_to_time = Calendar.getInstance();
         getSupportActionBar().hide();
+        sharedPreferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        write = sharedPreferences.edit();
+
         ll_save_reminder = findViewById(R.id.ll_save);
         initialize();
         onclicks();
@@ -73,6 +94,14 @@ public class Alarm extends AppCompatActivity {
         tv_date_to = findViewById(R.id.tv_date_to);
         tv_time_from = findViewById(R.id.tv_time_from);
         tv_time_to = findViewById(R.id.tv_time_to);
+        tv_repeat = findViewById(R.id.tv_repeat);
+        cb_all_day = findViewById(R.id.cb_allday);
+        tv_text_repeat = findViewById(R.id.tv_repeat_text);
+
+
+
+
+
     }
 
     public void onclicks()
@@ -124,6 +153,29 @@ public class Alarm extends AppCompatActivity {
         });
 
 
+
+
+
+        cb_all_day.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(cb_all_day.isChecked()){
+                    Toast.makeText(Alarm.this, "ALL Day", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(Alarm.this, "NOT ALL Day", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        tv_repeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DIALOGE_CALENDAR();
+            }
+        });
+
     }
 
 
@@ -145,13 +197,23 @@ public class Alarm extends AppCompatActivity {
     };
 
     private void from_date_lable() {
-        String myFormat = "MM/dd/yy";
+        String myFormat = "MM/dd/yyyy";
 
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Log.i("Date_", sdf.format(from_date_calendar.getTime()));
         from_date = sdf.format(from_date_calendar.getTime());
         Log.i("Date_", from_date);
         tv_date_from.setText(sdf.format(from_date_calendar.getTime()));
+
+
+
+        String[] parts = from_date.split("/");
+        from_month = Integer.parseInt(parts[0]);
+        from_day = Integer.parseInt(parts[1]);
+        from_year = Integer.parseInt(parts[2]);
+        Log.i("DATE_FOR_ALARM" , "MONTH: " + from_month + " DAY: " + from_day + " YEAR: " + from_year);
+
+
     }
 
 
@@ -162,6 +224,7 @@ public class Alarm extends AppCompatActivity {
         final Calendar c = Calendar.getInstance();
         fromt_hour_picker_calendar = c.get(Calendar.HOUR_OF_DAY);
         fromt_mint_picker_calendar = c.get(Calendar.MINUTE);
+
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -182,12 +245,37 @@ public class Alarm extends AppCompatActivity {
 
     public void AlarmNotification()
     {
+
 //        from_date_calendar.setTimeInMillis(System.currentTimeMillis());
         from_date_calendar.set(Calendar.HOUR_OF_DAY , hour_from);
         from_date_calendar.set(Calendar.MINUTE, mint_from);
+
+        from_date_calendar.set(Calendar.DAY_OF_MONTH, from_day);
+        from_date_calendar.set(Calendar.MONTH, from_month-1);
+        from_date_calendar.set(Calendar.YEAR, from_year);
+
+       Log.i("GettingDATE " , " " + from_date_calendar.getTime());
+        to_date_calendar.set(Calendar.HOUR_OF_DAY , hour_to);
+        to_date_calendar.set(Calendar.MINUTE, mint_to);
+
+        to_date_calendar.set(Calendar.DAY_OF_MONTH, to_day);
+        to_date_calendar.set(Calendar.MONTH, to_month-1);
+        to_date_calendar.set(Calendar.YEAR, to_year);
+
+        Calendar calendar = Calendar.getInstance();
+//        if(calendar.getD)
+
+
+
+
+
+        Log.i("ALARM_TIME" , " " + from_date_calendar.getTimeInMillis());
         Intent intent = new Intent(getApplicationContext(), Alarm_Broadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis() , pendingIntent);
+
+
+//        alarmManager.setRepeating("","","","","");
     }
 
 
@@ -211,7 +299,7 @@ public class Alarm extends AppCompatActivity {
     };
 
     private void to_date_lable() {
-        String myFormat = "MM/dd/yy";
+        String myFormat = "MM/dd/yyyy";
 
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         Log.i("Date_", sdf.format(from_date_calendar.getTime()));
@@ -249,6 +337,288 @@ public class Alarm extends AppCompatActivity {
 
 
 
+    public void DIALOGE_CALENDAR() {
+
+        final android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(Alarm.this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        @SuppressLint("InflateParams") final View dialogView = inflater.inflate(R.layout.days_dialog, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+
+
+        TextView tv_ok  = dialogView.findViewById(R.id.tv_OK_alarm);
+        TextView tv_cancel = dialogView.findViewById(R.id.tv_cancel_alarm);
+        ll_mon = dialogView.findViewById(R.id.ll_monday);
+        ll_tue = dialogView.findViewById(R.id.ll_tuesday);
+        ll_wed = dialogView.findViewById(R.id.ll_wednesday);
+        ll_thurs = dialogView.findViewById(R.id.ll_thursday);
+        ll_fri = dialogView.findViewById(R.id.ll_friday);
+        ll_sat = dialogView.findViewById(R.id.ll_saturday);
+        ll_sun = dialogView.findViewById(R.id.ll_sunday);
+
+        cb_mon = dialogView.findViewById(R.id.cb_monday);
+        cb_tue = dialogView.findViewById(R.id.cb_tuesday);
+        cb_wed = dialogView.findViewById(R.id.cb_wednesday);
+        cb_thurs = dialogView.findViewById(R.id.cbthursday);
+        cb_fri = dialogView.findViewById(R.id.cb_friday);
+        cb_sat = dialogView.findViewById(R.id.cb_saturday);
+        cb_sun = dialogView.findViewById(R.id.cb_sunday);
+
+
+        check_uncheck();
+
+        String mon, tue, wed,thr,fri,sat,sun;
+        cb_mon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_mon.setChecked(true);
+                    write.putBoolean("MON", true);
+                    write.putString("M", "M,");
+                    Toast.makeText(Alarm.this, "Checked", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    cb_mon.setChecked(false);
+                    write.putBoolean("MON" , false);
+                    write.putString("M", "");
+                    Toast.makeText(Alarm.this, "Unchecked", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        cb_tue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    if(isChecked)
+                    {
+                        cb_tue.setChecked(true);
+                        write.putBoolean("TUE", true);
+                        write.putString("TU", "TU,");
+                    }
+                    else{
+                        cb_tue.setChecked(false);
+                        write.putBoolean("TUE" , false);
+                        write.putString("TU", "");
+
+                    }
+            }
+        }});
+
+
+        cb_wed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_wed.setChecked(true);
+                    write.putBoolean("WED", true);
+                    write.putString("W", "W,");
+                }
+                else{
+                    cb_wed.setChecked(false);
+                    write.putBoolean("WED" , false);
+                    write.putString("W", "");
+
+                }
+            }
+        });
+
+
+
+        cb_thurs.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_thurs.setChecked(true);
+                    write.putBoolean("THR", true);
+                    write.putString("TH", "TH,");
+                }
+                else{
+                    cb_thurs.setChecked(false);
+                    write.putBoolean("THR" , false);
+                    write.putString("TH", "");
+
+                }
+            }
+        });
+
+
+
+        cb_fri.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_fri.setChecked(true);
+                    write.putBoolean("FRI", true);
+                    write.putString("F", "F,");
+                }
+                else{
+                    cb_fri.setChecked(false);
+                    write.putBoolean("FRI" , false);
+                    write.putString("F", "");
+
+                }
+            }
+        });
+
+
+
+        cb_sat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_sat.setChecked(true);
+                    write.putBoolean("SAT", true);
+                    write.putString("S", "S,");
+                }
+                else{
+                    cb_sat.setChecked(false);
+                    write.putBoolean("SAT" , false);
+                    write.putString("S", "");
+
+                }
+            }
+        });
+
+
+        cb_sun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    cb_sun.setChecked(true);
+                    write.putString("SU", "SU,");
+                    write.putBoolean("SUN", true);
+                }
+                else{
+                    cb_sun.setChecked(false);
+                    write.putBoolean("SUN" , false);
+                    write.putString("SU", "");
+
+                }
+            }
+        });
+
+
+
+        final android.support.v7.app.AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        tv_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                write.commit();
+                tv_text_repeat.setText(sharedPreferences.getString("M", "") +
+                        sharedPreferences.getString("TU", "") + " "+
+                        sharedPreferences.getString("W", "") + " "+
+                        sharedPreferences.getString("TH", "") + " "+
+                        sharedPreferences.getString("F", "") + " "+
+                        sharedPreferences.getString("S", "") + " "+
+                        sharedPreferences.getString("SU", "") + " ");
+                b.dismiss();
+            }
+        });
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                b.dismiss();
+
+            }
+        });
+
+
+    }
+
+
+    boolean pref_mon, pref_tues, pref_wed, pref_thr, pref_fri, pref_sat, pref_sun;
+    public void check_uncheck()
+    {
+        pref_mon = sharedPreferences.getBoolean("MON" ,false);
+        pref_tues = sharedPreferences.getBoolean("TUE" ,false);
+        pref_wed = sharedPreferences.getBoolean("WED" ,false);
+        pref_thr = sharedPreferences.getBoolean("THR" ,false);
+        pref_fri = sharedPreferences.getBoolean("FRI" ,false);
+        pref_sat = sharedPreferences.getBoolean("SAT" ,false);
+        pref_sun = sharedPreferences.getBoolean("SUN" ,false);
+
+
+        if(pref_mon == true)
+        {
+            cb_mon.setChecked(true);
+        }
+        else {
+            cb_mon.setChecked(false);
+        }
+
+
+
+        if(pref_tues == true)
+        {
+            cb_tue.setChecked(true);
+        }
+        else {
+            cb_tue.setChecked(false);
+        }
+
+
+
+        if(pref_wed == true)
+        {
+            cb_wed.setChecked(true);
+        }
+        else {
+            cb_wed.setChecked(false);
+        }
+
+
+        if(pref_thr == true)
+        {
+            cb_thurs.setChecked(true);
+        }
+        else {
+            cb_thurs.setChecked(false);
+        }
+
+
+        if(pref_fri == true)
+        {
+            cb_fri.setChecked(true);
+        }
+        else {
+            cb_fri.setChecked(false);
+        }
+
+
+        if(pref_sat == true)
+        {
+            cb_sat.setChecked(true);
+        }
+        else {
+            cb_sat.setChecked(false);
+        }
+
+
+        if(pref_sun == true)
+        {
+            cb_sun.setChecked(true);
+        }
+        else
+        {
+            cb_sun.setChecked(false);
+        }
+
+
+
+
+    }
 
 
 }

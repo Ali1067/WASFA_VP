@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Alarm_Broadcast  extends BroadcastReceiver {
 
@@ -19,6 +20,7 @@ public class Alarm_Broadcast  extends BroadcastReceiver {
 
     public void create(Context context)
     {
+        Toast.makeText(context, "Alarm Triggered", Toast.LENGTH_SHORT).show();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.clock);
         builder.setContentTitle("Notification Text");
