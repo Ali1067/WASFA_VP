@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Alarm_Broadcast  extends BroadcastReceiver {
 
     private final  int ID = 23;
@@ -19,7 +21,7 @@ public class Alarm_Broadcast  extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("BC_STARTS" , "ONRECIEVE");
-       sharedPreferences= PreferenceManager.getDefaultSharedPreferences(context);
+       sharedPreferences= context.getSharedPreferences("MyPref", MODE_PRIVATE);
         create(context);
     }
 
@@ -28,6 +30,8 @@ public class Alarm_Broadcast  extends BroadcastReceiver {
         Toast.makeText(context, "Alarm Triggered", Toast.LENGTH_SHORT).show();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.clock);
+        Log.i("BC_STARTS_TEXT" , sharedPreferences.getString("TITLE" , "") + " " +
+        sharedPreferences.getString("DESCRIPTION" , ""));
         builder.setContentTitle(sharedPreferences.getString("TITLE" , ""));
         builder.setContentText(sharedPreferences.getString("DESCRIPTION" , ""));
         builder.setCategory(NotificationCompat.CATEGORY_REMINDER);

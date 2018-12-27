@@ -18,24 +18,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Alarm extends AppCompatActivity {
 
@@ -80,6 +75,9 @@ public class Alarm extends AppCompatActivity {
         initialize();
         onclicks();
 
+
+        Log.i("BC_STARTS_TEXT" , sharedPreferences.getString("TITLE" , "") + " " +
+                sharedPreferences.getString("DESCRIPTION" , ""));
 
 
 
@@ -170,12 +168,7 @@ public class Alarm extends AppCompatActivity {
                     et_title.setError("Required");
                 }
 
-
-//                else
-//                {
-//                    et_description.setError("Required");
-//                }
-//                AlarmNotification();
+                write.commit();
             }
         });
 
@@ -190,6 +183,7 @@ public class Alarm extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 if(cb_all_day.isChecked()){
                     Toast.makeText(Alarm.this, "ALL Day", Toast.LENGTH_SHORT).show();
+                    All_days();
                 }else{
                     Toast.makeText(Alarm.this, "NOT ALL Day", Toast.LENGTH_SHORT).show();
                 }
@@ -307,34 +301,25 @@ public class Alarm extends AppCompatActivity {
 
 
             //Future or todays date.
-        if(from_date_calendar.getTimeInMillis() >= calendar.getTimeInMillis())
-
-        {
-
-//            if(to_date_calendar.getTimeInMillis() <= from_date_calendar.getTimeInMillis())
-//            {
+//        if(from_date_calendar.getTimeInMillis() >= calendar.getTimeInMillis())
+//        {
 
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis() , pendingIntent);
                 Toast.makeText(this, "SHould Work", Toast.LENGTH_SHORT).show();
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,from_date_calendar.getTimeInMillis() ,
-                        3*1000*3600,pendingIntent);
+//                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,from_date_calendar.getTimeInMillis() ,
+//                        3*1000*3600,pendingIntent);
                     // 3  * 1000 = 3 sec -> 3 x3600 = 3 hours -->repeat after 3 hours
 
 
+//        }
 
 
-
-//            }
-        }
-
-                        //Passed Date.
-//        else if (from_date_calendar .getTimeInMillis()< calendar.getTimeInMillis())
-        else
-        {
-
-            Toast.makeText(this, "SHould not Work", Toast.LENGTH_SHORT).show();
-        }
+//        else
+//        {
+//
+//            Toast.makeText(this, "SHould not Work", Toast.LENGTH_SHORT).show();
+//        }
 
             write.commit();
 
@@ -597,13 +582,23 @@ public class Alarm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 write.commit();
+
+//                tv_text_repeat.setText(sharedPreferences.getString("M", "") +
+//                        sharedPreferences.getString("TU", "") + " "+
+//                        sharedPreferences.getString("W", "") + " "+
+//                        sharedPreferences.getString("TH", "") + " "+
+//                        sharedPreferences.getString("F", "") + " "+
+//                        sharedPreferences.getString("S", "") + " "+
+//                        sharedPreferences.getString("SU", "") + " ");
+
+
                 tv_text_repeat.setText(sharedPreferences.getString("M", "") +
-                        sharedPreferences.getString("TU", "") + " "+
-                        sharedPreferences.getString("W", "") + " "+
-                        sharedPreferences.getString("TH", "") + " "+
-                        sharedPreferences.getString("F", "") + " "+
-                        sharedPreferences.getString("S", "") + " "+
-                        sharedPreferences.getString("SU", "") + " ");
+                        sharedPreferences.getString("TU", "") +
+                        sharedPreferences.getString("W", "") +
+                        sharedPreferences.getString("TH", "") +
+                        sharedPreferences.getString("F", "") +
+                        sharedPreferences.getString("S", "") +
+                        sharedPreferences.getString("SU", "")  );
                 b.dismiss();
             }
         });
@@ -702,4 +697,80 @@ public class Alarm extends AppCompatActivity {
     }
 
 
+
+
+//    if (Monday.isChecked()) {
+//        setalarm(2);
+//    }  if (Tuesday.isChecked()) {
+//        setalarm(3);
+//    }  if (Wednesday.isChecked()) {
+//        setalarm(4);
+//    }  if (Thursday.isChecked()) {
+//        setalarm(5);
+//    }  if (Friday.isChecked()) {
+//        setalarm(6);
+//    }  if (Saturday.isChecked()) {
+//        setalarm(7);
+//    }  if (Sunday.isChecked()) {
+//        setalarm(1);
+//    }
+
+    public void setalarm(int weekno) {
+
+        from_date_calendar.set(Calendar.DAY_OF_WEEK, weekno);
+
+        from_date_calendar.set(Calendar.MINUTE, mint_from);
+
+        Intent intent = new Intent(getApplicationContext(), Alarm_Broadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis(),
+                 1 *1000*3600*24 , pendingIntent);
+    }
+
+
+
+
+    public void All_days()
+    {
+
+        if(sharedPreferences.getString("M" , "").equals("M"))
+        {
+            setalarm(2);
+
+        }
+
+        if(sharedPreferences.getString("TU" , "").equals("TU"))
+        {
+            setalarm(3);
+        }
+
+        if(sharedPreferences.getString("W" , "").equals("W"))
+        {
+            setalarm(4);
+        }
+
+        if(sharedPreferences.getString("TH" , "").equals("TH"))
+        {
+            setalarm(5);
+
+        }
+        if(sharedPreferences.getString("F" , "").equals("F"))
+        {
+            setalarm(6);
+        }
+        if(sharedPreferences.getString("S" , "").equals("S"))
+        {
+            setalarm(7);
+        }
+
+        if(sharedPreferences.getString("SU" , "").equals("SU"))
+        {
+            setalarm(1);
+        }
+
+
+
+    }
 }

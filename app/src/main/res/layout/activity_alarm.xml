@@ -11,6 +11,10 @@
     android:layoutDirection="ltr">
 
      Action Bar Image
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +34,8 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:src="@drawable/back"
                 android:layout_gravity="top"/>
         </LinearLayout>
@@ -48,6 +54,14 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <!-- Add Tittels-->
     <LinearLayout
@@ -191,6 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To"
+            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:padding="10dp"
             android:textStyle="bold"/>
@@ -201,6 +216,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="10dp"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -257,7 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="@drawable/edittext_background"
-            android:maxLines="6"
+            android:maxLines="8"
             android:layout_marginRight="1dp"
             android:inputType="textShortMessage"
             android:hint="Add Descirption"
@@ -274,17 +290,24 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
         android:background="@color/light_green">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_gravity="center"
+
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
             android:gravity="center"
             android:text="Save Reminder"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
     </LinearLayout>
-
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
