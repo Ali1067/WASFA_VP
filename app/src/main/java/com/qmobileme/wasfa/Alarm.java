@@ -14,6 +14,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import java.util.TimerTask;
 public class Alarm extends AppCompatActivity {
 
     String to_date , from_date, to_time, from_time;
-    int hour_from, mint_from, hour_to, mint_to;
+    int hour_from =0, mint_from=0, hour_to=0, mint_to=0;
     int from_day, from_month, from_year, to_day, to_month, to_year;
      int to_hour_picker_calendar, to_mint_picker_calendar;
      int fromt_hour_picker_calendar, fromt_mint_picker_calendar;
@@ -54,6 +55,8 @@ public class Alarm extends AppCompatActivity {
      LinearLayout tv_repeat;
      CheckBox cb_all_day;
      boolean b_mon, b_tue, b_wed, b_thur, b_fri, b_sat, b_sun;
+
+     EditText et_title, et_description;
      SharedPreferences sharedPreferences;
      SharedPreferences.Editor write;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -78,11 +81,6 @@ public class Alarm extends AppCompatActivity {
         onclicks();
 
 
-//        if(hour_from == Calendar.HOUR_OF_DAY && mint_from == Calendar.MINUTE)
-//        {
-//            AlarmNotification();
-//        }
-
 
 
     }
@@ -97,6 +95,8 @@ public class Alarm extends AppCompatActivity {
         tv_repeat = findViewById(R.id.tv_repeat);
         cb_all_day = findViewById(R.id.cb_allday);
         tv_text_repeat = findViewById(R.id.tv_repeat_text);
+        et_title = findViewById(R.id.et_alarm_title);
+        et_description =  findViewById(R.id.et_alarm_description);
 
 
 
@@ -148,7 +148,34 @@ public class Alarm extends AppCompatActivity {
         ll_save_reminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlarmNotification();
+
+
+
+                if (!TextUtils.isEmpty((et_title.getText().toString())))
+                {
+                    String text = et_title.getText().toString();
+                    write.putString("TITLE" , text);
+                    if (!TextUtils.isEmpty((et_description.getText().toString())))
+                    {
+                        String text_des = et_description.getText().toString();
+                        write.putString("DESCRIPTION" , text_des);
+                        AlarmNotification();
+                    }
+                    else{
+                        et_description.setError("Required");
+                    }
+
+                }
+                else{
+                    et_title.setError("Required");
+                }
+
+
+//                else
+//                {
+//                    et_description.setError("Required");
+//                }
+//                AlarmNotification();
             }
         });
 
@@ -254,25 +281,68 @@ public class Alarm extends AppCompatActivity {
         from_date_calendar.set(Calendar.MONTH, from_month-1);
         from_date_calendar.set(Calendar.YEAR, from_year);
 
-       Log.i("GettingDATE " , " " + from_date_calendar.getTime());
+       Log.i("GettingDATE " , "FROM DATE " + from_date_calendar.getTime());
+
+        to_date_calendar.clear();
         to_date_calendar.set(Calendar.HOUR_OF_DAY , hour_to);
         to_date_calendar.set(Calendar.MINUTE, mint_to);
-
         to_date_calendar.set(Calendar.DAY_OF_MONTH, to_day);
         to_date_calendar.set(Calendar.MONTH, to_month-1);
         to_date_calendar.set(Calendar.YEAR, to_year);
-
+        Log.i("GettingDATE" , "HOUR " + hour_to + " MINT " + mint_to + " day " +to_day
+        +" month " +to_month + " year" + to_year) ;
+        Log.i("GettingDATE " , "TO DATE " + to_date_calendar.getTime());
+        Log.i("GettingDATE " , "TO DATE MILLI " + to_date_calendar.getTimeInMillis());
         Calendar calendar = Calendar.getInstance();
-//        if(calendar.getD)
 
-
-
-
-
-        Log.i("ALARM_TIME" , " " + from_date_calendar.getTimeInMillis());
         Intent intent = new Intent(getApplicationContext(), Alarm_Broadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis() , pendingIntent);
+
+
+
+        Log.i("GettingDATE " , "FROM CALENDAR DATE " + from_date_calendar.getTime());
+        Log.i("GettingDATE " , "FROM CALENDAR DATE Milli " + from_date_calendar.getTimeInMillis());
+        Log.i("GettingDATE " , "Current CALENDAR DATE " + calendar.getTime());
+        Log.i("GettingDATE " , "Current MILLI CALENDAR DATE " + from_date_calendar.getTimeInMillis());
+
+
+            //Future or todays date.
+        if(from_date_calendar.getTimeInMillis() >= calendar.getTimeInMillis())
+
+        {
+
+//            if(to_date_calendar.getTimeInMillis() <= from_date_calendar.getTimeInMillis())
+//            {
+
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis() , pendingIntent);
+                Toast.makeText(this, "SHould Work", Toast.LENGTH_SHORT).show();
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,from_date_calendar.getTimeInMillis() ,
+                        3*1000*3600,pendingIntent);
+                    // 3  * 1000 = 3 sec -> 3 x3600 = 3 hours -->repeat after 3 hours
+
+
+
+
+
+//            }
+        }
+
+                        //Passed Date.
+//        else if (from_date_calendar .getTimeInMillis()< calendar.getTimeInMillis())
+        else
+        {
+
+            Toast.makeText(this, "SHould not Work", Toast.LENGTH_SHORT).show();
+        }
+
+            write.commit();
+
+
+//        Log.i("ALARM_TIME" , " " + from_date_calendar.getTimeInMillis());
+//        Intent intent = new Intent(getApplicationContext(), Alarm_Broadcast.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, from_date_calendar.getTimeInMillis() , pendingIntent);
 
 
 //        alarmManager.setRepeating("","","","","");
@@ -302,10 +372,18 @@ public class Alarm extends AppCompatActivity {
         String myFormat = "MM/dd/yyyy";
 
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        Log.i("Date_", sdf.format(from_date_calendar.getTime()));
-        from_date = sdf.format(from_date_calendar.getTime());
-        Log.i("Date_", from_date);
-        tv_date_to.setText(sdf.format(from_date_calendar.getTime()));
+        Log.i("Date_", sdf.format(to_date_calendar.getTime()));
+        to_date = sdf.format(to_date_calendar.getTime());
+        Log.i("Date_", to_date);
+        tv_date_to.setText(sdf.format(to_date_calendar.getTime()));
+
+        String[] parts = to_date.split("/");
+        to_month = Integer.parseInt(parts[0]);
+        to_day = Integer.parseInt(parts[1]);
+        to_year = Integer.parseInt(parts[2]);
+        Log.i("TO_DATE_FOR_ALARM" , "MONTH: " + to_month + " DAY: " + to_day + " YEAR: " + to_year);
+
+
     }
 
 
@@ -326,6 +404,9 @@ public class Alarm extends AppCompatActivity {
                                           int minute) {
 
                         //Timer for alarm
+
+                        hour_to = hourOfDay;
+                        mint_to = minute;
 
                         tv_time_to.setText(hourOfDay + ":" + minute);
                     }
